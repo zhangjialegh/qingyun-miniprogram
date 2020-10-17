@@ -307,7 +307,7 @@
 			handleImgClose (e) {
 				let items = this.imgs.slice()
 				for (let i = 0; i < items.length; i++) {
-               					items[i].active = false;
+              items[i].active = false;
 					if (e.currentTarget.dataset.id == items[i].id) {
 						items.splice(i, 1)
 					}

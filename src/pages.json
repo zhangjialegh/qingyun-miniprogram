@@ -76,6 +76,20 @@
       "style": {
         "navigationBarTitleText": "扫码与识别"
       }
+    }, {
+      "path": "pages/navigation/index/index",
+      "style": {
+        "navigationBarTitleText": "点位",
+        "navigationBarBackgroundColor": "#07c160",
+        "backgroundColor": "#07c160"
+      }
+    }, {
+      "path": "pages/navigation/location/location",
+      "style": {
+        "navigationBarTitleText": "定位",
+        "navigationBarBackgroundColor": "#07c160",
+        "backgroundColor": "#07c160"
+      }
     }
   ],
   "globalStyle": {

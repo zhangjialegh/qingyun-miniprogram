@@ -129,7 +129,7 @@
 					"disableHostCheck" : true,
 					"proxy" : {
 							"/v2api" : {
-									"target" : "http://localhost:8003",
+									"target" : "https://qingyun.jialekoi.cn",
 									"changeOrigin" : true,
 									"secure" : false
 							}

@@ -42,7 +42,6 @@ export default {
 				})
 			},
 			uniLogin: function(options) { //登录逻辑
-				const vx = Vue.gd;
 				const scene = options.scene
 				return new Promise((resolve, reject) => {
 					uni.login({
@@ -161,6 +160,7 @@ export default {
 			uniRequest: function(obj) {
 				const vx = Vue.gd
 				const token = Vue.store.state.accessToken || uni.getStorageSync(OPT.key) || ''
+
 				// 如果还未登录，需要登录后再执行
 				// #ifdef H5
 				return new Promise((resolve, reject) => {
@@ -175,9 +175,7 @@ export default {
 				// #endif
 
 				if (token || obj.notAuth) {
-					
 					return new Promise((resolve, reject) => {
-						
 						vx.uniFetch(obj)
 							.then((res) => {
 								resolve(res)

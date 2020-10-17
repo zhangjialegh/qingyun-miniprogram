@@ -15,12 +15,15 @@
 						{{item.text}}
 					</view>
 				</view>
+				<!-- 关闭弹窗 -->
+				<button class="copy-confirm-btn close" plain :style="{background:'#ffffff'}" hover-class="btn-hover-class" @tap.stop="$refs.popup.close()">
+					<text>关闭</text>
+				</button>
 				<!-- 确定修改按钮 -->
 				<button class="copy-confirm-btn" plain :style="{background:'#ffffff'}" hover-class="btn-hover-class" @tap.stop="handleSure" v-if="selects.length">
 					<text>复制选中</text>
 				</button>
-				<button class="copy-confirm-btn toggle-all" :style="{background:bgColor}" plain hover-class="btn-hover-class" @tap.stop="handleToggleAll"
-				 v-if="lists.length">
+				<button class="copy-confirm-btn toggle-all" :style="{background:bgColor}" plain hover-class="btn-hover-class" @tap.stop="handleToggleAll" v-if="lists.length">
 					<text :style="{color:textColor}">全{{selects.length == lists.length ? '不' : ''}}选</text>
 				</button>
 			</view>
@@ -296,6 +299,11 @@
 				background-color: var(--base-color);
 				color: #fff;
 			}
+		}
+		&.close {
+			background-color: var(--base-color);
+			color: #fff;
+			left: 600rpx;
 		}
 
 		>text {
