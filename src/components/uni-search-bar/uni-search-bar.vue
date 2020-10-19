@@ -3,17 +3,17 @@
 		<view :style="{borderRadius:radius+'px',backgroundColor: bgColor}" class="uni-searchbar__box" @click="searchClick">
 			<!-- #ifdef MP-ALIPAY -->
 			<view class="uni-searchbar__box-icon-search">
-				<uni-icons color="#999999" size="18" type="search" />
+				<uni-icons color="#999999" size="15" type="search" />
 			</view>
 			<!-- #endif -->
 			<!-- #ifndef MP-ALIPAY -->
-			<uni-icons color="#999999" class="uni-searchbar__box-icon-search" size="18" type="search" />
+			<uni-icons color="#999999" class="uni-searchbar__box-icon-search" size="16" type="search" />
 			<!-- #endif -->
 			<input v-if="show" :focus="showSync" :placeholder="placeholder" :maxlength="maxlength" @confirm="confirm" class="uni-searchbar__box-search-input"
 			 confirm-type="search" type="text" v-model="searchVal" />
 			<text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
 			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='')" class="uni-searchbar__box-icon-clear" @click="clear">
-				<uni-icons color="#999999" class="" size="24" type="clear" />
+				<uni-icons color="#999999" class="" size="16" type="clear" />
 			</view>
 		</view>
 		<text @click="cancel" class="uni-searchbar__cancel" v-if="cancelButton ==='always' || show && cancelButton ==='auto'">{{cancelText}}</text>
@@ -50,25 +50,32 @@
 			},
 			bgColor: {
 				type: String,
-				default: "#F8F8F8"
+				default: "#fff"
 			},
 			maxlength: {
 				type: [Number, String],
 				default: 100
+			},
+			value: {
+				type: String
 			}
 		},
 		data() {
 			return {
 				show: false,
 				showSync: false,
-				searchVal: ""
+				searchVal: ''
 			}
 		},
 		watch: {
-			searchVal() {
-				this.$emit("input", {
-					value: this.searchVal
-				})
+			value(v) {
+				this.searchVal = v
+				if (v) {
+					this.show = true
+				}
+			},
+			searchVal(v) {
+				this.$emit("input", v)
 			}
 		},
 		methods: {
@@ -115,7 +122,7 @@
 </script>
 
 <style lang="scss" scoped>
-	$uni-searchbar-height: 36px;
+	$uni-searchbar-height: 28px;
 
 	.uni-searchbar {
 		/* #ifndef APP-NVUE */
@@ -177,7 +184,7 @@
 	.uni-searchbar__cancel {
 		padding-left: 10px;
 		line-height: $uni-searchbar-height;
-		font-size: 14px;
+		font-size: 12px;
 		color: $uni-text-color;
 	}
 </style>

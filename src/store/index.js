@@ -11,7 +11,9 @@ const store = new Vuex.Store({
 		path: '',
 		system: null,
 		scene: '',
-		previewInfo: {}
+		previewInfo: {},
+		searchMap: '',
+		cityMap: '天津'
 	},
 	mutations: {
 		setUserInfo (state, payload) {
@@ -34,6 +36,12 @@ const store = new Vuex.Store({
 		},
 		setPreviewInfo (state, payload) {
 			state.previewInfo = payload
+		},
+		searchMap (state, payload) {
+			state.searchMap = payload
+		},
+		cityMap (state, payload) {
+			state.cityMap = payload
 		}
 	}
 })

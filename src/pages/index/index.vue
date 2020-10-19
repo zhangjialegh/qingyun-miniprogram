@@ -45,6 +45,11 @@
 						text: 'OCR',
 						image: '/static/ocr.png',
 						backgroundImage: ''
+					}, {
+						path: '/pages/navigation/index/index',
+						text: '定位',
+						image: '/static/map.png',
+						backgroundImage: ''
 					}]
 				}, {
 				  title: '生活趣味',

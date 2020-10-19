@@ -90,6 +90,13 @@
         "navigationBarBackgroundColor": "#07c160",
         "backgroundColor": "#07c160"
       }
+    }, {
+      "path": "pages/navigation/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索",
+        "navigationBarBackgroundColor": "#07c160",
+        "backgroundColor": "#07c160"
+      }
     }
   ],
   "globalStyle": {

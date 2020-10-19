@@ -1,21 +1,24 @@
 <template>
 	<view class="container">
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback">
-			<sideslip v-for="(item) in cardLists" :key="item.id" @remove="deleteCard(item.id)" :options="options">
-				<button @tap.stop='goCardDetail(item)' plain class='record-item' hover-class='button-hover-class'>
-					<view class='logo-box'>
+			<sideslip v-for="(item) in locationLists" :key="item.id" @remove="deleteLocation(item.id)" :options="options">
+				<div class='record-item'>
+					<view class='logo-box' @longpress.stop="callPhone(item)">
 						<text>{{item.logo}}</text>
 					</view>
 					<view class='record'>
-						<text class='title'>{{item.webname}}</text>
-						<text class='desc'>更新时间：{{item.updatedAt}}</text>
+						<text class='title'>{{item.name}}</text>
+						<text class='desc'>{{item.address}}</text>
 					</view>
-				</button>
+					<button class="image-box" @tap.stop='goNavigate(item)' hover-class='button-hover-class' plain>
+						<image src="/static/navigate.png"></image>
+					</button>
+				</div>
 			</sideslip>
 		</mescroll-uni>
 
 		<!-- 添加卡片按钮 -->
-		<button plain class='add-btn' @tap='goAddCard'>
+		<button plain class='add-btn' @tap='goAddLocation'>
 			<text class='iconfont icon-plus'></text>
 		</button>
 	</view>
@@ -32,14 +35,9 @@
 		},
 		data() {
 			return {
-				cardLists: [],
+				locationLists: [],
 				mescroll: {},
 				options: [
-					// {
-					// 	text: '复制',
-					// 	event: 'copy',
-					// 	width: 'max'
-					// },
 					{
 						text: '删除',
 						event: 'remove',
@@ -67,16 +65,6 @@
 		computed: {
 
 		},
-		// #ifndef H5
-		onShareAppMessage() {
-			return {
-				title: '网密--网站密码生成小工具',
-				desc: '网络账号存储，密码前端生成，无后台存储，更加安全',
-				path: '/pages/websecret/index/index'
-			}
-		},
-		// #endif
-
 		methods: {
 			downCallback(mescroll) {
 				mescroll.resetUpScroll()
@@ -95,7 +83,7 @@
 					this.mescroll = mescroll
 				}
 				Vue.gd.uniRequest({
-					url: 'card/list',
+					url: 'location/list',
 					isGet: true,
 					data: {
 						page: pageNum,
@@ -109,8 +97,8 @@
 					let hasNext = res.data.length >= 8
 					
 					//设置列表数据
-					if(mescroll.num == 1) vx.cardLists = []; //如果是第一页需手动置空列表
-					vx.cardLists = vx.cardLists.concat(curPageData); //追加新数据
+					if(mescroll.num == 1) vx.locationLists = []; //如果是第一页需手动置空列表
+					vx.locationLists = vx.locationLists.concat(curPageData); //追加新数据
 					mescroll.endSuccess(curPageData.length, hasNext); 
 				}).catch(err => {
 					mescroll.endDownScroll()
@@ -120,11 +108,10 @@
 				})
 				
 			},
-			getAllCards() {
+			getAllLocations() {
 				this.downCallback(this.mescroll)
 			},
-			goAddCard() {
-				console.log(this.$store.state,'8989')
+			goAddLocation() {
 				let isLogin = this.$store.state.accessToken ? true : false
 				// #ifdef H5
 				isLogin = true
@@ -141,28 +128,46 @@
 				
 			},
 
-			// 点击卡片去详情页
-			goCardDetail(e) {
-				const id = e.id
-				uni.navigateTo({
-					url: '/pages/websecret/detail/detail?oid=' + id
+			// 点击导航
+			goNavigate(item) {
+				uni.openLocation({
+					longitude: item.lng,
+					latitude: item.lat,
+					name: item.name,
+					address: item.address
 				})
 			},
 
 			// 删除卡片
-			deleteCard(id) {
+			deleteLocation(id) {
 				const vx = this
 				this.$gd.uniRequest({
-					url: 'card/delete',
+					url: 'location/delete',
 					isGet: true,
 					data: {
 						id
 					}
 				}).then(res => {
 					if (res.success) {
-						vx.cardLists = vx.cardLists.filter(item => item.id != id)
+						vx.locationLists = vx.locationLists.filter(item => item.id != id)
 					}
 				})
+			},
+			callPhone(item) {
+				if (item.tel) {
+					const phone = item.tel.split(',')[0]
+					this.$gd.uniModal({
+					title: phone,
+					content: '拨打电话？',
+					confirmText: '拨打',
+					showCancel: true,
+					confirm: () => {
+						uni.makePhoneCall({
+							phoneNumber: phone
+						})
+					}
+				})
+				}
 			}
 		}
 	}
@@ -200,6 +205,20 @@
 		text-align: left;
 		height: auto;
 		line-height: 1.5;
+	}
+	.record-item > .image-box {
+		position: absolute;
+		right: 30rpx;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 70rpx;
+		height: 70rpx;
+		padding: 0;
+		border-radius: 50%;
+	}
+	.record-item > .image-box > image {
+		width: 100%;
+		height: 100%;
 	}
 
 	.record-item>.logo-box {
