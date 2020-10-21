@@ -190,9 +190,9 @@ export default {
 					vx.areaVal = res.value
 				});
 				var length = this.areaVal[1];
-				var lengthc = this.areaVal[0];
+        var lengthc = this.areaVal[0];
 				var countyCity = this.citys[length].name;
-				if (countyCity == "市辖区" || !length) {
+				if (countyCity == "市辖区" || countyCity == "县" || countyCity === undefined || countyCity === '') {
 					countyCity = this.provinces[lengthc].name;
 				}
 				if(sure || e.currentTarget.dataset.type === 'sure') {

@@ -3,19 +3,29 @@
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback">
 			<sideslip v-for="(item) in locationLists" :key="item.id" @remove="deleteLocation(item.id)" :options="options">
 				<div class='record-item'>
-					<view class='logo-box' @longpress.stop="callPhone(item)">
+					<view class='logo-box' @longpress.stop="doPhone(item)">
 						<text>{{item.logo}}</text>
 					</view>
-					<view class='record'>
-						<text class='title'>{{item.name}}</text>
+					<view class='record' @tap.stop='goNavigate(item)'>
+						<text class='title' @tap.stop="doPhone(item)"><text v-if="item.tel" class="iconfont icon-phone"></text>{{item.name}}</text>
 						<text class='desc'>{{item.address}}</text>
 					</view>
-					<button class="image-box" @tap.stop='goNavigate(item)' hover-class='button-hover-class' plain>
+					<button class="image-box" @tap.stop='goNavigate(item)' plain hover-class='button-hover-class'>
 						<image src="/static/navigate.png"></image>
 					</button>
 				</div>
 			</sideslip>
 		</mescroll-uni>
+
+		<!-- 电话弹窗 -->
+		<popup :animation="true" ref="phone" type="bottom" :maskClick="true">
+			<view class="call-phone-box">
+				<button class="call-phone-item" hover-class='button-hover-class' plain v-for="item in telphones" :key="item" @tap="makePhoneCall(item)">
+					<view class="iconfont icon-phone"></view>
+					<text>{{item}}</text>
+				</button>
+			</view>
+		</popup>
 
 		<!-- 添加卡片按钮 -->
 		<button plain class='add-btn' @tap='goAddLocation'>
@@ -60,10 +70,8 @@
 					use: true,
 					auto: false
 				},
+				telphones: []
 			};
-		},
-		computed: {
-
 		},
 		methods: {
 			downCallback(mescroll) {
@@ -153,21 +161,25 @@
 					}
 				})
 			},
-			callPhone(item) {
+			doPhone(item) {
 				if (item.tel) {
-					const phone = item.tel.split(',')[0]
-					this.$gd.uniModal({
-					title: phone,
-					content: '拨打电话？',
-					confirmText: '拨打',
-					showCancel: true,
-					confirm: () => {
-						uni.makePhoneCall({
-							phoneNumber: phone
-						})
+					if (item.tel.includes(';')) {
+						this.telphones = item.tel.split(';')
+					} else if (item.tel.includes(',')) {
+						this.telphones = item.tel.split(',')
+					} else {
+						this.telphones = [item.tel]
 					}
-				})
+					this.$nextTick(()=>{
+						this.$refs.phone.open()
+					})
 				}
+			},
+			makePhoneCall(phone) {
+				this.$refs.phone.close()
+				uni.makePhoneCall({
+					phoneNumber: phone
+				})
 			}
 		}
 	}
@@ -197,6 +209,7 @@
 	}
 
 	.record-item {
+		width: 750rpx;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -278,5 +291,26 @@
 	button {
 		border-radius: 0;
 		text-align: left;
+	}
+	.call-phone-box {
+		width: 100%;
+		padding: 15rpx 0;
+		background-color: #fff;
+		border-top-left-radius: 15rpx;
+		border-top-right-radius: 15rpx;
+		overflow: hidden;
+	}
+	.call-phone-item {
+		width: 100%;
+		padding: 30rpx 15rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 34rpx;
+	}
+	.call-phone-item .iconfont {
+		color: #07c160;
+		margin-right: 10rpx;
+		font-size: 25px;
 	}
 </style>

@@ -47,7 +47,7 @@
 						backgroundImage: ''
 					}, {
 						path: '/pages/navigation/index/index',
-						text: '定位',
+						text: '地点收藏',
 						image: '/static/map.png',
 						backgroundImage: ''
 					}]

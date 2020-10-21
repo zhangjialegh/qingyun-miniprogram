@@ -79,21 +79,21 @@
     }, {
       "path": "pages/navigation/index/index",
       "style": {
-        "navigationBarTitleText": "点位",
+        "navigationBarTitleText": "收藏的地点",
         "navigationBarBackgroundColor": "#07c160",
         "backgroundColor": "#07c160"
       }
     }, {
       "path": "pages/navigation/location/location",
       "style": {
-        "navigationBarTitleText": "定位",
+        "navigationBarTitleText": "地图定位",
         "navigationBarBackgroundColor": "#07c160",
         "backgroundColor": "#07c160"
       }
     }, {
       "path": "pages/navigation/search/search",
       "style": {
-        "navigationBarTitleText": "搜索",
+        "navigationBarTitleText": "地点搜索",
         "navigationBarBackgroundColor": "#07c160",
         "backgroundColor": "#07c160"
       }

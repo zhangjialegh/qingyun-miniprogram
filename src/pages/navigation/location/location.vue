@@ -4,6 +4,7 @@
       <map
         id="mapId"
         ref="mapId"
+        v-if="init"
         style="width:100%;height:100%"
         :show-location="showLocation"
         :latitude="latitude"
@@ -49,7 +50,7 @@ export default {
 			return this.$store.state.cityMap
 		}
   },
-  onReady() {
+  onLoad() {
     const vx = this;
     uni.getLocation({
       type: "gcj02",
@@ -87,7 +88,8 @@ export default {
                 console.log(err, 'mov f')
               }
             })
-						vx.$store.commit('cityMap', res.data.result.address_component.city)
+            vx.$store.commit('cityMap', res.data.result.address_component.city)
+            vx.$store.commit('searchMap', '')
 					} else {
 						uni.showToast({title: '获取位置失败，请打开定位开关'})
 					}
@@ -159,8 +161,8 @@ export default {
     savePoint(e) {
       this.$gd.uniModal({
         title: this.currentPoint.title,
-        content: '存储该位置？',
-        confirmText: '保存',
+        content: '收藏该位置？',
+        confirmText: '收藏',
         showCancel: true,
         confirm: () => {
           this.insertRequest()
