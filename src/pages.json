@@ -71,12 +71,16 @@
         "navigationBarBackgroundColor": "#E44025",
         "backgroundColor": "#E44025"
       }
-    }, {
+    }, 
+    // #ifndef H5
+    {
       "path": "pages/scan/scan",
       "style": {
         "navigationBarTitleText": "扫码与识别"
       }
-    }, {
+    }, 
+    // #endif
+    {
       "path": "pages/navigation/index/index",
       "style": {
         "navigationBarTitleText": "收藏的地点",

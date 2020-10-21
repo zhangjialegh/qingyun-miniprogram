@@ -39,7 +39,8 @@ export default {
 			init: false,
 			showLocation: true,
       mapCtx: null,
-      currentPoint: null
+      currentPoint: null,
+      timer: null
     };
   },
   computed: {
@@ -63,6 +64,10 @@ export default {
         vx.init = true;
       },
     });
+  },
+  onHide() {
+    clearTimeout(this.timer)
+    this.timer = null
   },
   methods: {
     geocoder(location) {
@@ -102,55 +107,57 @@ export default {
 		moveToLocation(item) {
       this.currentPoint = item
       this.$nextTick(()=>{
-        this.markers = [{
-            id: 1,
+        this.timer = setTimeout(()=>{
+            this.markers = [{
+              id: 1,
+              longitude: item.location.lng,
+              latitude: item.location.lat,
+              width: 20,
+              height: 30,
+              iconPath: '/static/location.png',
+              callout: {
+                content: item.title,
+                display: 'ALWAYS',
+                padding: 8,
+                borderRadius: 12,
+                fontSize: 14,
+                bgColor: '#07c160',
+                color: '#ffffff'
+              },
+              label: {
+                content: item.address,
+                padding: 5,
+                borderRadius: 10,
+                x: -50,
+                y: 0,
+                fontSize: 10,
+                bgColor: '#ffffff',
+                color: '#07c160',
+                borderColor: '#07c160',
+                borderWidth: 1
+              }
+          }]
+          this.mapCtx.moveToLocation({
             longitude: item.location.lng,
             latitude: item.location.lat,
-            width: 20,
-            height: 30,
-            iconPath: '/static/location.png',
-            callout: {
-              content: item.title,
-              display: 'ALWAYS',
-              padding: 8,
-              borderRadius: 12,
-              fontSize: 14,
-              bgColor: '#07c160',
-              color: '#ffffff'
+            success(res) {
+              console.log(res,'mov s')
             },
-            label: {
-              content: item.address,
-              padding: 5,
-              borderRadius: 10,
-              x: -50,
-              y: 0,
-              fontSize: 10,
-              bgColor: '#ffffff',
-              color: '#07c160',
-              borderColor: '#07c160',
-              borderWidth: 1
+            fail(err) {
+              console.log(err, 'mov f')
             }
-        }]
-        this.mapCtx.moveToLocation({
-          longitude: item.location.lng,
-          latitude: item.location.lat,
-          success(res) {
-            console.log(res,'mov s')
-          },
-          fail(err) {
-            console.log(err, 'mov f')
-          }
-        })
-        this.mapCtx.translateMarker({
-          markerId: 1,
-          destination: {
-            longitude: item.location.lng,
-            latitude: item.location.lat
-          },
-          fail(err) {
-            console.log(err, 'arke f')
-          }
-        })
+          })
+          this.mapCtx.translateMarker({
+            markerId: 1,
+            destination: {
+              longitude: item.location.lng,
+              latitude: item.location.lat
+            },
+            fail(err) {
+              console.log(err, 'arke f')
+            }
+          })
+        }, 500)
       })
 		},
     navigate() {
@@ -198,20 +205,12 @@ export default {
       })
     },
     handleNavigate(e) {
-      this.$gd.uniModal({
-        title: this.currentPoint.address,
-        content: '导航到该位置？',
-        confirmText: '导航',
-        showCancel: true,
-        confirm: () => {
-          const item = this.currentPoint
-          uni.openLocation({
-            longitude: item.location.lng,
-            latitude: item.location.lat,
-            name: item.title,
-            address: item.address
-          })
-        }
+      const item = this.currentPoint
+      uni.openLocation({
+        longitude: item.location.lng,
+        latitude: item.location.lat,
+        name: item.title,
+        address: item.address
       })
     }
   },
