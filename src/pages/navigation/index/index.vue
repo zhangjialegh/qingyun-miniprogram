@@ -210,7 +210,7 @@
 
 	.record-item {
 		box-sizing: border-box;
-		width: 750rpx;
+		width: 100%;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
