@@ -143,29 +143,24 @@ export default {
       if (!this.keyWord) {
         return Promise.resolve({data: []})
       }
-      return new Promise((resolve, rejct) => {
-        uni.request({
-          url: "https://apis.map.qq.com/ws/place/v1/search",
-          method: "GET",
-          data: {
-            keyword: this.keyWord,
-            boundary: `region(${this.cityName},0)`,
-            page_index: num,
-            page_size: size,
-            key: TX_MAP_KEY
-          },
-          success(res) {
-            if (res.statusCode === 200 && res.errMsg === 'request:ok' && res.data.status === 0) {
-              resolve(res.data)
-            } else {
-              Vue.gd.uniToast({title: res.data.message})
-              resolve({data: []})
-            }
-          },
-          fail(err) {
-            console.log(err,'3333')
-          }
-        });
+      return this.$gd.uniRequest({
+        url: 'cornucopia/place-search',
+        isGet: true,
+        data: {
+          keyword: this.keyWord,
+          boundary: `region(${this.cityName},0)`,
+          page_index: num,
+          page_size: size,
+          key: TX_MAP_KEY
+        },
+        notAuth: true
+      }).then(res => {
+        if (res.success) {
+          return res.data
+        } else {
+          Vue.gd.uniToast({title: '信息获取失败'})
+          return []
+        }
       })
     },
     //点击选择城市按钮显示picker-view
@@ -204,7 +199,7 @@ export default {
 				const vx = this
 				model.updateAreaData(this, 1, e, (res) => {
 					vx.animated = res.animated
-					vx.areaShow = res.show
+					vx.areaShow = true
 					vx.provinces = res.provinces
 					vx.citys = res.citys
 					vx.areaVal = res.value
@@ -216,7 +211,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-box {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 40px;
   display: flex;

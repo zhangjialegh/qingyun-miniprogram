@@ -71,38 +71,36 @@ export default {
   },
   methods: {
     geocoder(location) {
-			const vx = this
-      uni.request({
-        url: "https://apis.map.qq.com/ws/geocoder/v1/",
-        method: "GET",
+      const vx = this
+      this.$gd.uniRequest({
+        url: 'cornucopia/geocoder',
+        isGet: true,
         data: {
           location,
           get_poi: 0,
-          key: TX_MAP_KEY,
+          key: TX_MAP_KEY
         },
-        success(res) {
-          if (res.statusCode && res.errMsg === 'request:ok') {
-            vx.mapCtx = uni.createMapContext('mapId', vx)
-            vx.mapCtx.moveToLocation({
-              latitude: res.data.result.location.lat,
-              longitude: res.data.result.location.lng,
-              success(res) {
-                console.log(res,'mov s')
-              },
-              fail(err) {
-                console.log(err, 'mov f')
-              }
-            })
-            vx.$store.commit('cityMap', res.data.result.address_component.city)
-            vx.$store.commit('searchMap', '')
-					} else {
-						uni.showToast({title: '获取位置失败，请打开定位开关'})
-					}
-        },
-        fail(err) {
-          console.log(err);
-        },
-      });
+        notAuth: true
+      }).then(res => {
+        if (res.success) {
+          const data = res.data
+          vx.mapCtx = uni.createMapContext('mapId', vx)
+          vx.mapCtx.moveToLocation({
+            latitude: data.location.lat,
+            longitude: data.location.lng,
+            success(res) {
+              console.log(res,'mov s')
+            },
+            fail(err) {
+              console.log(err, 'mov f')
+            }
+          })
+          vx.$store.commit('cityMap', data.address_component.city)
+          vx.$store.commit('searchMap', '')
+        } else {
+          uni.showToast({title: '获取位置失败，请打开定位开关'})
+        }
+      })
     },
 		moveToLocation(item) {
       this.currentPoint = item

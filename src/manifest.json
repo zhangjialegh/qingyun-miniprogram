@@ -113,7 +113,7 @@
 			"sdkConfigs" : {
 					"maps" : {
 							"qqmap" : {
-									"key" : ""
+									"key" : "G26BZ-NIGWU-Y42VR-2SHCA-5REZ3-QUFKD"
 							}
 					}
 			},
@@ -129,7 +129,7 @@
 					"disableHostCheck" : true,
 					"proxy" : {
 							"/v2api" : {
-									"target" : "https://qingyun.jialekoi.cn",
+									"target" : "http://localhost:8003",
 									"changeOrigin" : true,
 									"secure" : false
 							}

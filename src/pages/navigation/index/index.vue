@@ -209,6 +209,7 @@
 	}
 
 	.record-item {
+		box-sizing: border-box;
 		width: 750rpx;
 		display: flex;
 		justify-content: flex-start;
