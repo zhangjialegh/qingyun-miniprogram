@@ -103,6 +103,19 @@
       }
     }
   ],
+  // #ifdef MP-WEIXIN
+  "subPackages":[{
+    "root":"pagesOther",
+    "pages": [{
+      "path": "voice/voice",
+      "style": {
+        "navigationBarTitleText": "同声传译",
+        "navigationBarBackgroundColor": "#9e639b",
+        "backgroundColor": "#9e639b"
+      }
+    }]
+  }],
+  // #endif
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "青云器",
@@ -112,7 +125,8 @@
     "backgroundColorBottom": "#F4F5F6",
     "app-plus": {
       "background": "#F4F5F6"
-    }
+    },
+    "usingComponents":{}
   },
   "condition": { //模式配置，仅开发期间生效
     "current": 0, //当前激活的模式(list 的索引项)

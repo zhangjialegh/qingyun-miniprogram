@@ -73,6 +73,20 @@ export default {
             },
           ],
         },
+        // #ifdef MP-WEIXIN
+        {
+          title: "三方服务",
+          id: 3,
+          lists: [
+            {
+              path: "/pagesOther/voice/voice",
+              text: "同声传译",
+              image: "https://ifile.jialekoi.cn/qingyun/3/1.png",
+              backgroundImage: "",
+            },
+          ],
+        }
+        // #endif
       ],
     };
   },

@@ -67,7 +67,7 @@
 	.grid-wrap {
 		width: 96%;
 		margin-left: 2%;
-		background-color: rgba(255, 255, 255, 0.7);
+		background-color: rgba(255, 255, 255, 0.8);
 		border-radius: 20upx;
 		// box-shadow: 0 0 5upx 2upx #efefef;
 		margin-top: 15upx;
@@ -75,8 +75,8 @@
 
 		.grid-title {
 			padding: 30rpx;
-			color: #4a4a4a;
-			font-size: 32rpx;
+			color: #666666;
+			font-size: 26rpx;
 		}
 
 		.grid-item-box {

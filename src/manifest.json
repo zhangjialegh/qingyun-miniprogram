@@ -93,6 +93,14 @@
 					"scope.userLocation" : {
 							"desc" : "需要获取你的位置信息"
 					}
+			},
+			"plugins": {
+				// #ifdef MP-WEIXIN
+				"WechatSI": {
+					"version": "0.3.1",
+					"provider": "wx069ba97219f66d99"
+				}
+				// #endif
 			}
 	},
 	"mp-alipay" : {

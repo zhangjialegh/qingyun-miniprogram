@@ -132,6 +132,13 @@ module.exports = {
 			return hours + '小时前'
 		}
 	},
+	recordTime: (date) => {
+		var month = date.getMonth() + 1
+		var day = date.getDate()
+		var hour = date.getHours()
+		var minute = date.getMinutes()
+		return [month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':')
+	},
 	md5: md5,
 	drawjs: drawjs,
 	area: areaInfo
