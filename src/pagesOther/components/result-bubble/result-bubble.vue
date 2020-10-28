@@ -20,7 +20,7 @@
           class="edit-icon"
           v-if="editShow"
           :data-item="item"
-          :url="'/pages/edit/edit?content='+item.text+'&index='+index">
+          :url="'/pagesOther/voiceedit/voiceedit?content='+item.text+'&index='+index">
             <image class="edit-icon-img" :src="edit_icon_path" ></image>
         </navigator>
       </view>

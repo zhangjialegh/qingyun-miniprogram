@@ -113,8 +113,21 @@
         "navigationBarBackgroundColor": "#9e639b",
         "backgroundColor": "#9e639b"
       }
+    },{
+      "path": "voiceedit/voiceedit",
+      "style": {
+        "navigationBarTitleText": "同声传译",
+        "navigationBarBackgroundColor": "#9e639b",
+        "backgroundColor": "#9e639b"
+      }
     }]
   }],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["pagesOther"]
+    }
+  },
   // #endif
   "globalStyle": {
     "navigationBarTextStyle": "white",
