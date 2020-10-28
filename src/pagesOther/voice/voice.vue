@@ -14,20 +14,20 @@
         id="translate-empty"
         v-if="!recording && dialogList.length == 0"
       >
-        <result-bubble :item="initTranslate" :record-status="0"></result-bubble>
+        <result-bubble :item="initTranslate" :record-status="0" @modaldelete.stop="deleteItem"></result-bubble>
       </view>
       <view
         v-for="(item, index) in dialogList"
         :key="index"
         class="dialog-wrap"
         :data-index="index"
-        @modaldelete.stop="deleteItem"
       >
         <result-bubble
           :item="item"
           :edit-show="index == dialogList.length - 1"
           :index="index"
           :current-translate-voice="currentTranslateVoice"
+          @modaldelete.stop="deleteItem"
           @translate="translateTextAction"
           @expired="expiredAction"
         ></result-bubble>
@@ -36,6 +36,7 @@
         <result-bubble
           :item="currentTranslate"
           :record-status="recordStatus"
+          @modaldelete.stop="deleteItem"
         ></result-bubble>
       </view>
       <view id="translate-fake"></view>
@@ -279,7 +280,7 @@ export default {
      * 删除卡片
      */
     deleteItem (e) {
-      // console.log("deleteItem" ,e)
+      console.log("deleteItem" ,e)
       // let detail = e.detail;
       let item = e.item;
 
@@ -295,7 +296,6 @@ export default {
         }
       }, 0);
     },
-
     /**
      * 识别内容为空时的反馈
      */

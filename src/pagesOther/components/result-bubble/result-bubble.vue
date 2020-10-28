@@ -4,6 +4,7 @@
       <modal :modal-show="modalShow"
         :index="index"
         :item="item"
+        @modaldelete="modaldelete"
         @modalleave="modalLeave"></modal>
     </view>
     <view class="create-time">{{item.create}}</view>
@@ -112,6 +113,9 @@ export default {
      */
     showModal() {
       this.modalShow = true
+    },
+    modaldelete(...res) {
+      this.$emit('modaldelete', ...res)
     },
 
     /**
